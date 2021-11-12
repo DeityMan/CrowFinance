@@ -12,7 +12,7 @@ pragma solidity ^0.6.2;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-abstract contract Crowtext {
+abstract contract CrowToken {
     function _msgSender() internal view virtual returns (address) {
         return msg.sender;
     }
