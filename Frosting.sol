@@ -11,7 +11,7 @@ import "./IUniswapV2Factory.sol";
 import "./IUniswapV2Router.sol";
 
 
-contract Crow is ERC20, Ownable {
+contract Frosting Token is ERC20, Ownable {
     using SafeMath for uint256;
 
     IUniswapV2Router02 public uniswapV2Router;
@@ -19,7 +19,7 @@ contract Crow is ERC20, Ownable {
 
     bool private swapping;
 
-    CrowDividendTracker public dividendTracker;
+    FrostDividendTracker public dividendTracker;
 
     address public deadWallet = 0x000000000000000000000000000000000000dEaD;
 
@@ -36,7 +36,7 @@ contract Crow is ERC20, Ownable {
     uint256 public marketingFee = 4;
     uint256 public totalFees = CRORewardsFee.add(liquidityFee).add(marketingFee);
 
-    address public _marketingWalletAddress = 0xb0a576717676c902c0ec8ACcf19501400Df1DAc5;
+    address public _marketingWalletAddress = 0x1cedd418d04Ab36e524bD796cf5EFd91dBB53874;
 
 
     // use by default 300,000 gas to process auto-claiming dividends
