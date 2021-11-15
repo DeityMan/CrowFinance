@@ -1,5 +1,5 @@
-# CROW
+# Frosting Token
 A contract with auto-redistribution in CRO
   
-http://CrowFinance.app
+http://FatEcosystem.com
 
