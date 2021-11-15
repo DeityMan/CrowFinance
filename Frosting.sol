@@ -25,9 +25,9 @@ contract Frosting Token is ERC20, Ownable {
 
     address public immutable CRO = address(0xA0b73E1Ff0B80914AB6fe0444E65848C4C34450b); //CRO
 
-    uint256 public swapTokensAtAmount = 2000000 * (10**18);
-    uint256 public maxTxAmount = 100000000 * (10**18);
-    uint256 public maxWalletBalance = 1000000000 * (10**18);
+    uint256 public swapTokensAtAmount = 50000 * (10**18);
+    uint256 public maxTxAmount = 10000000 * (10**18);
+    uint256 public maxWalletBalance = 20000000 * (10**18);
 
     mapping(address => bool) public _isBlacklisted;
 
@@ -83,9 +83,9 @@ contract Frosting Token is ERC20, Ownable {
     	address indexed processor
     );
 
-    constructor() public ERC20("Crow Finance", "CROW") {
+    constructor() public ERC20("Frosting Token", "FROST") {
 
-    	dividendTracker = new CrowDividendTracker();
+    	dividendTracker = new FrostingDividendTracker();
 
 
     	IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0xcd7d16fB918511BF7269eC4f48d61D79Fb26f918);
@@ -114,7 +114,7 @@ contract Frosting Token is ERC20, Ownable {
             _mint is an internal function in ERC20.sol that is only called here,
             and CANNOT be called ever again
         */
-        _mint(owner(), 10000000 * (10**18));
+        _mint(owner(), 1000000000 * (10**18));
     }
 
     receive() external payable {
@@ -122,11 +122,11 @@ contract Frosting Token is ERC20, Ownable {
   	}
 
     function updateDividendTracker(address newAddress) public onlyOwner {
-        require(newAddress != address(dividendTracker), "Crow: The dividend tracker already has that address");
+        require(newAddress != address(dividendTracker), "Frosting: The dividend tracker already has that address");
 
-        CrowDividendTracker newDividendTracker = CrowDividendTracker(payable(newAddress));
+        FrostingDividendTracker newDividendTracker = FrostingDividendTracker(payable(newAddress));
 
-        require(newDividendTracker.owner() == address(this), "Crow: The new dividend tracker must be owned by the Crow token contract");
+        require(newDividendTracker.owner() == address(this), "Frosting: The new dividend tracker must be owned by the Crow token contract");
 
         newDividendTracker.excludeFromDividends(address(newDividendTracker));
         newDividendTracker.excludeFromDividends(address(this));
@@ -148,7 +148,7 @@ contract Frosting Token is ERC20, Ownable {
     }
 
     function excludeFromFees(address account, bool excluded) public onlyOwner {
-        require(_isExcludedFromFees[account] != excluded, "Crow: Account is already the value of 'excluded'");
+        require(_isExcludedFromFees[account] != excluded, "Frosting: Account is already the value of 'excluded'");
         _isExcludedFromFees[account] = excluded;
 
         emit ExcludeFromFees(account, excluded);
@@ -190,7 +190,7 @@ contract Frosting Token is ERC20, Ownable {
     }
 
     function setAutomatedMarketMakerPair(address pair, bool value) public onlyOwner {
-        require(pair != uniswapV2Pair, "Crow: The CronaSwap pair cannot be removed from automatedMarketMakerPairs");
+        require(pair != uniswapV2Pair, "Frosting: The CronaSwap pair cannot be removed from automatedMarketMakerPairs");
 
         _setAutomatedMarketMakerPair(pair, value);
     }
@@ -201,7 +201,7 @@ contract Frosting Token is ERC20, Ownable {
 
 
     function _setAutomatedMarketMakerPair(address pair, bool value) private {
-        require(automatedMarketMakerPairs[pair] != value, "Crow: Automated market maker pair is already set to that value");
+        require(automatedMarketMakerPairs[pair] != value, "Frosting: Automated market maker pair is already set to that value");
         automatedMarketMakerPairs[pair] = value;
 
         if(value) {
@@ -213,7 +213,7 @@ contract Frosting Token is ERC20, Ownable {
 
 
     function updateGasForProcessing(uint256 newValue) public onlyOwner {
-        require(newValue >= 200000 && newValue <= 500000, "Crow: gasForProcessing must be between 200,000 and 500,000");
+        require(newValue >= 200000 && newValue <= 500000, "Frosting: gasForProcessing must be between 200,000 and 500,000");
         require(newValue != gasForProcessing, "Crow: Cannot update gasForProcessing to same value");
         emit GasForProcessingUpdated(newValue, gasForProcessing);
         gasForProcessing = newValue;
